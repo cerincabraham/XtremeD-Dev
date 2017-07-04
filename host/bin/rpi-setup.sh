@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# variables (per pi)
-export build="LC HR"
 # can be either 4ktouch, 4kscreen, "Photocentric 10" or "LC HR"
 export portno=9091
 # currently set to 9091. Needs to be updated if the port config changes.
@@ -10,7 +8,7 @@ export newpassword=photocentric
 # *** IMPORTANT NOTE *** declaring this as a variable in an open source project is totally insecure!
 # Ideally the password should be changed offline, and this repo should never be updated to match that.
 # but it's still better than sending out the hardware with the default pi user and password unchanged. Obviously.
-export repo="draakie2017/Photonic3D-dev"
+export repo="Cerin-Photonic3D/Photonic3D-Dev"
 
 #require SU
 if [[ $UID != 0 ]]; then
@@ -43,17 +41,6 @@ if [ -e photonic-repo ]; then
 fi
 git clone https://github.com/${repo}.git photonic-repo
 rpi-update
-
-echo "setting up printer config file"
-if [ ! -e /etc/photocentric/printerconfig.ini ]; then
-	mkdir /etc/photocentric
-	echo "export printername=\"$build\"" >> /etc/photocentric/printerconfig.ini
-	echo "export repo=\"$repo\"" >> /etc/photocentric/printerconfig.ini
-	echo "...done"
-	else
-	echo "Printer update file already exists!?"
-fi
-
 
 if [ "$build" != "4ktouch" ]; then
 		echo "update photonic"
@@ -119,7 +106,7 @@ fi
 echo "Working on per printer settings..."
 echo \# Photocentric mods >> /boot/config.txt
 
-if [ "$build" != "4kscreen" ]; then
+
 	# Touchscreen pis only
 	echo "Modifying config files for touchscreen"
 	if grep -Fxq "disable_splash" /boot/config.txt
@@ -188,82 +175,11 @@ if [ "$build" != "4kscreen" ]; then
 			echo set geometry=maximized >> /home/pi/uzbl.conf
 		fi
 			
-fi
-
-if [ "$build" == "4ktouch" ]
-	then
-		#4K touchscreen only
-		newhost="4ktouch"
-		#enabling NTP listening 
-		echo setting up network time client
-		sed -i "s/\#disable/disable/g" /etc/ntp.conf
-		sed -i "s/\#broadcastclient/broadcastclient/g" /etc/ntp.conf
-		/etc/init.d/ntp restart
-fi
-
-if [ "$build" == "4kscreen" ]
-	then
-		newhost="4kscreen"
-		echo "Installing 4k support"
-		if grep -Fxq "hdmi_pixel_freq_limit" /boot/config.txt
-			then
-				echo "already done!"
-			else
-				echo hdmi_group=2 >> /boot/config.txt
-				echo hdmi_mode=87 >> /boot/config.txt
-				echo hdmi_cvt 3840 2160 24 >> /boot/config.txt
-				echo max_framebuffer_width=3840 >> /boot/config.txt
-				echo max_framebuffer_height=2160 >> /boot/config.txt
-				echo hdmi_pixel_freq_limit=400000000 >> /boot/config.txt
-		fi
-		
-		#TODO - add network time propogation to support 4ktouch. Currently built into WG images, but not setup by shell script yet
-		echo "setting up Photocentric Pro profile"
-		wget https://raw.githubusercontent.com/${repo}/master/host/printers/Photocentric%20Pro.json -O printerprofile.json
-		echo var printerName = \"Photocentric Pro\"\; > /opt/cwh/resourcesnew/printflow/js/printerconfig.js
-fi
-
-if [ "$build" == "LC HR" ]
-	then
-		newhost="lchr"
-		echo "setting up high resolution screen"
-		if grep -Fxq "hdmi_pixel_freq_limit" /boot/config.txt
-			then
-				echo "already done!"
-			else
-				echo hdmi_group=2 >> /boot/config.txt
-				echo hdmi_mode=87 >> /boot/config.txt
-				echo hdmi_cvt 2048 1536 30 >> /boot/config.txt
-				echo max_framebuffer_width=2048 >> /boot/config.txt
-				echo max_framebuffer_height=1536 >> /boot/config.txt
-				echo hdmi_pixel_freq_limit=400000000 >> /boot/config.txt
-		fi
 
 
-		echo "installing Photocentric Liquid Crystal HR profile"
-		wget https://raw.githubusercontent.com/${repo}/master/host/printers/photocentric%20hr.json -O printerprofile.json
-		echo var printerName = \"LC HR\"\; > /opt/cwh/resourcesnew/printflow/js/printerconfig.js
-fi
 
 
-if [ "$build" == "Photocentric 10" ]
-	then
-		newhost="standalone"
-		echo "creating standalone image..."
-		#TODO
-		sudo sh -c 'echo lcd_rotate=2 >> /boot/config.txt'
-		echo hdmi_group=2 >> /boot/config.txt
-		echo hdmi_mode=87 >> /boot/config.txt
-		echo hdmi_cvt=1024 600 60 3 0 0 0 >> /boot/config.txt
-		echo "installing Photocentric 10 profile"
-		wget https://raw.githubusercontent.com/${repo}/master/host/printers/photocentric%2010.json -O printerprofile.json
-		echo var printerName = \"Photocentric 10\"\; > /opt/cwh/resourcesnew/printflow/js/printerconfig.js
-fi
-
-if [ -e printerprofile.json ]; then
-	curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d @printerprofile.json "http://localhost:$portno/services/printers/save"
-fi
-
+		newhost="3dPrinter"
 
 # Change hostname
 # left this 'til last for good reasons. Keep it last now.
