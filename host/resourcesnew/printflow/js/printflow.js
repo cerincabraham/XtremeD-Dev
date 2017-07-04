@@ -30,27 +30,6 @@ function startpage(){
         else{
                 wifiupdate();
         }
-        //handles page setup and the common things across all pages:
-        
-        if (typeof Cookies.get('printerstatus') !== 'undefined'){
-                document.getElementById("printerstatus").src = Cookies.get('printerstatus');
-        }
-        else{
-                printerStatus();
-        }
-        
-        
-        // do the first updates
-        //document.getElementById("time").innerHTML = moment().format("HH:mm:ss[<br>]DD-MMM-YY");
-        printredirect();
-       
-        setInterval(function() {
-                //time handling/updating
-		//document.getElementById("time").innerHTML = moment().format("HH:mm:ss[<br>]DD-MMM-YY");
-                //redirect to print dialogue on user initiating a print
-                printredirect();
-                printerStatus();
-	}, 1000);
         
         setInterval(function() {
                 //wifi updating
@@ -111,72 +90,7 @@ function wifiupdate(){
 	document.getElementById("wifi").src = wifiurl;
 }
             
-function printredirect(){
-        if ((typeof printerName === 'undefined')||(String(window.location.href).indexOf("error.html") >= 0)) {
-            //do nothing as there'll be a new call in 1 second, or we're on the error page and we don't want to redirect from that without the user dismissing the error.
-        }
-        else{
-		//send the user to the printdialogue page if a print is in progress.
-                $.getJSON("../services/printJobs/getByPrinterName/"+encodeURI(printerName)).done(function (data){
-			if ((typeof data !== 'undefined')&&(data !== null)){
-				console.log(data);
-				printStatus= (data.status);
-                                jobId = (data.id);
-                                runningjobName = (data.jobName);
-                                totalslices = (data.totalSlices);
-                                currentslice = (data.currentSlice);
-                                elapsedtime = (data.elapsedTime);
-                                averageslicetime = (data.averageSliceTime);
-                                starttime = (data.startTime);
-                                if ((typeof Cookies.get('laststartedjob') === 'undefined')||(Cookies.get('laststartedjob')!=jobId)){
-                                        Cookies.set('laststartedjob',jobId);
-                                }
-			}
-			else{
-				//not printing
-                                totalslices = 0;
-                                currentslice = 0;
-                                runningjobName = "";
-                                jobID = "";
-                                elapsedtime = 0;
-                                averageslicetime = 0;
-                                starttime = 0;
-			}
-		})
-                .fail(function(){
-                        totalslices = 0;
-                        currentslice = 0;
-                        runningjobName = "";
-                        jobID = "";
-                        elapsedtime = 0;
-                        averageslicetime = 0;
-                        starttime = 0;
-                });
-             
-		if (printStatus=="Failed"){
-                        //use cookies to check that this error has not been reported already for the unique job id. Otherwise you'll be stuck in a constant loop of being forced back to the error screen.
-                        if ((typeof Cookies.get('lastfailedjob') === 'undefined')||(Cookies.get('lastfailedjob')!=jobId)){
-                                Cookies.set('lastfailedjob',jobId);
-                                setTimeout(function() {
-                                        window.location.href=("error.html?errorname=Print Failed&errordetails=The print of "+runningjobName+" [Job ID: "+jobId+"] has unexpectedly failed.&errordetails2=Please retry the print, and if the issue persists, contact Technical Support via <b>www.currax3d.com</b>");
-                                }, 100);  
-                        }
-		}
-		if (printStatus=="Printing"){
-			if (String(window.location.href).indexOf("printdialogue") < 0){
-				window.location.href="printdialogue.html";
-			}
-		}
-                if (printStatus=="Cancelling" || printStatus=="Cancelled"){
-                        if ((typeof Cookies.get('lastcancelledjob') === 'undefined')||(Cookies.get('lastcancelledjob')!=jobId)){
-                                Cookies.set('lastcancelledjob',jobId);
-                                setTimeout(function() {
-                                        window.location.href=("error.html?type=info&errorname=Print Cancelled&errordetails=The print of <b>"+runningjobName+"</b> [Job ID: "+jobId+"] was cancelled.");
-                                }, 100);                        
-                        }
-		}
-    }				
-}
+
 
 function urlParam (name){
 	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);

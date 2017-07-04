@@ -2,6 +2,89 @@ html, body {
 	overflow:hidden;
 }
 
+.disable {
+	position: absolute; 
+	top: 333px; 
+	left: 230px;
+}
+
+.enable {
+	position: absolute; 
+	top: 333px; 
+	left: 230px;
+}
+
+.motor {
+	position: absolute; 
+	top: 290px; 
+	left: 250px;
+}
+
+.home {
+	position: absolute; 
+	top: 333px; 
+	left: 660px;
+}
+
+.homing {
+	position: absolute; 
+	top: 270px; 
+	left: 687px;
+}
+
+.oneDown {
+	position: absolute; 
+	top: 260px; 
+	left: 423px;
+}
+
+.tenDown {
+	position: absolute; 
+	top: 260px; 
+	left: 503px;
+}
+
+.oneUp {
+	position: absolute; 
+	top: 142px; 
+	left: 383px;	
+}
+
+.tenUp {
+	position: absolute; 
+	top: 142px; 
+	left: 463px;	
+}
+
+.fiveteenUp {
+	position: absolute; 
+	top: 142px; 
+	left: 543px;	
+}
+.wifiButton{
+	position: absolute; 
+	top: 0px; 
+	left: 45px;
+}
+
+.filesButton{
+	position: absolute; 
+	top: 200px; 
+	left: 45px;
+}
+
+.controlsButton{
+	position: absolute; 
+	top: 340px; 
+	left: 45px;
+}
+
+
+.homeButton{
+	position: absolute; 
+	top: 60px; 
+	left: 45px;
+}
 
 
 .screen{
@@ -35,6 +118,9 @@ html, body {
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
 	-ms-user-select: none;
+	position: absolute; 
+	top: 130px; 
+	left: 230px;
 }
 .maintopconnector{
 	position: absolute; 
@@ -100,63 +186,6 @@ html, body {
 	-webkit-user-select: none;
 	-ms-user-select: none;
 }
-.homehighlight{
-	position: absolute; 
-	top: 50px; 
-	left: 10px;
-	animation-iteration-count: infinite;
-	animation-name: rotate;
-	animation-duration: 2s;
-	animation-timing-function: linear;
-	-webkit-animation-name: rotate;
-	-webkit-animation-duration: 2s;
-	-webkit-animation-timing-function: linear;
-	-webkit-animation-iteration-count: infinite;
-	user-drag: none; 
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-drag: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-}
-.smallbuttonhighlight{
-	position: absolute; 
-	top: 170px; 
-	left: 27px;
-	animation-iteration-count: infinite;
-	animation-name: rotate;
-	animation-duration: 2s;
-	animation-timing-function: linear;
-	-webkit-animation-name: rotate;
-	-webkit-animation-duration: 2s;
-	-webkit-animation-timing-function: linear;
-	-webkit-animation-iteration-count: infinite;
-	user-drag: none; 
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-drag: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-}
-.bigbuttonhighlight{
-	position: absolute; 
-	top: 63px; 
-	left: 86px;
-	animation-iteration-count: infinite;
-	animation-name: rotate;
-	animation-duration: 2s;
-	animation-timing-function: linear;
-	-webkit-animation-name: rotate;
-	-webkit-animation-duration: 2s;
-	-webkit-animation-timing-function: linear;
-	-webkit-animation-iteration-count: infinite;
-	user-drag: none; 
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-drag: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-}
 		
 @keyframes rotate{
 	from {
@@ -190,8 +219,8 @@ html, body {
 }
 .wifi{
 	position: absolute; 
-	top: 20px; 
-	left: 740px;
+	top: 5px; 
+	left: 5px;
 	width: 30px;
 	height: 30px;
 	user-drag: none; 
@@ -258,3 +287,120 @@ html, body {
 	-ms-user-select: none;
 	z-index: 50;
 }
+
+		.title { 
+			position: absolute; 
+			top: 20px; 
+			left: 200px;
+			color: white;
+			font-size: 30px;
+			z-index: 2;
+		}
+		.printbutton { 
+			position: absolute; 
+			top: 315px; 
+			left: 250px;
+			width:300px;
+			color: white;
+			text-align: center;
+			font-size: 30px;
+			z-index: 2;
+		}
+		.printlabel { 
+			position: absolute; 
+			top: 120; 
+			left: 130;
+			width:60px;
+			color: white;
+			text-align: center;
+			font-size: 30px;
+			z-index: 2;
+		}
+		
+		.printables {
+			position: absolute; 
+			top: 132px; 
+			left: 250px;
+			width:300px;
+			
+			background-color: transparent;
+			color: white;
+			font-size: 23px;
+			border: none;
+			padding: 5px;
+			line-height: 1;
+			border: 0;
+			border-radius: 10px;
+		}
+
+		.deletecontainer { 
+			position: absolute; 
+			top: 132px; 
+			left: 580px;
+			width:76px;
+			height:76px;
+			color: white;
+			text-align: center;
+			font-size: 30px;
+			z-index: 2;
+		}
+		
+		.refresh_prints { 
+			position: absolute; 
+			top: 300px; 
+			left: 140px;
+			width:76px;
+			height:76px;
+			color: white;
+			text-align: center;
+			font-size: 30px;
+			z-index: 2;
+		}
+		
+		.delete {
+			position: absolute;
+			z-index: 5;
+			user-drag: none; 
+			user-select: none;
+			-moz-user-select: none;
+			-webkit-user-drag: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+
+		}
+		
+		.deletecheck {
+			position: absolute; 
+			top: 130px; 
+			left: 560px;
+			width:200px;
+			height: 210px;
+		}
+		
+		.deletequery{
+			white-space: pre-wrap;      /* CSS3 */   
+			white-space: -moz-pre-wrap; /* Firefox */   
+			white-space: -o-pre-wrap;   /* Opera 7 */    
+			word-wrap: break-word;      /* IE */
+		}
+		
+		.deleteglyph {
+			position: absolute;
+			padding-top: 30%;
+			top: 33%; 
+			left: 30%;
+			height: 33%;
+			width: 33%;
+			margin: 0 auto;
+			user-drag: none; 
+			user-select: none;
+			-moz-user-select: none;
+			-webkit-user-drag: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+
+		}
+		
+
+
+

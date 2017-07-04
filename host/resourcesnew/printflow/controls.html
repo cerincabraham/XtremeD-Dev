@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Controls page</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="../jquery/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="../bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Latest v1 Angular -->
+        <script src="../angular/js/angular.min.js"></script>
+
+        <script src="js/moment.min.js"></script>
+		
+		<script src="js/printflow.js"></script>	
+		<script src="js/js.cookie.js"></script>
+		<script>
+		function init() {
+			// just grabbing the first printer available, since it's embedded this should be fine :)! Only downside printer would need to be started!
+			$.getJSON('/services/printers/getFirstAvailablePrinter').success(function(data) {
+	   	        configurationObject = data["configuration"];
+	   	    	printerName = configurationObject["name"];
+		     })
+		}
+		
+		function changez(height) {
+			$.getJSON('../services/printers/moveZ/'+printerName+'/'+height);
+			console.log("I'm gonna move " + height + " mm");
+		}
+		
+		function homez() {
+			$.getJSON('../services/printers/homeZ/'+printerName);
+			console.log("I'm gonna home")
+		}
+		</script>
+		
+		<link href="css/printflow.css" rel="stylesheet">
+    </head>
+    <body style="background-color: black;" onload="init();">
+        <div class="screen">
+            <div class="main">
+				<div class="title">Printer Controls</div>
+					<img class="wifiButton" src="images/ControlsBackground.png">
+				<a href="wifisettings.html">
+					<img class="wifiButton" src="images/wifi_white.png">
+				</a>
+				
+				<a href="index.html">
+					<img class="homeButton" src="images/home_blue.png">
+				</a>
+				
+				<a href="printables.html">
+					<img class="filesButton" src="images/file_blue.png">
+				</a>
+				
+				<a href="controls.html">
+					<img class="controlsButton" src="images/controls_grey.png">
+				</a>
+				
+				<img name="wifi" id="wifi" class="wifi" src="images/pixel.png">
+				
+				<img name="1Down" class="oneDown" src="images/1Down.png" onclick="changez(-1)">
+				<img name="10Down" class="tenDown" src="images/10Down.png" onclick="changez(-10)">
+				<img name="1Up" class="oneUp" src="images/1Up.png" onclick="changez(1)">
+				<img name="10Up" class="tenUp" src="images/10Up.png" onclick="changez(10)">
+				<img name="15Up" class="fiveteenUp" src="images/15Up.png" onclick="changez(15)">
+				
+				<img name="home" class="home" src="images/home.png" onclick="homez()">
+				<img name="enable" class="enable" src="images/Enable.png" onclick="changez(15)">
+				<img name="disable" class="disable" src="images/Disable.png" onclick="changez(15)">
+				<img name="homing" class="homing" src="images/homing.png" onclick="homez()">
+				<img name="motor" class="motor" src="images/motor.png" onclick="changez(15)">
+				
+            </div>
+        </div>
+
+	
+    </body>
+</html>
