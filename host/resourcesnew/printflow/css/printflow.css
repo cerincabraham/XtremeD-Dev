@@ -1,13 +1,18 @@
+@font-face {
+    font-family: 'MyriadPro-Regular'; /*a name to be used later*/
+    src: url('../fonts/MyriadPro-Regular.otf'); /*URL to font*/
+}
+
 html, body {
 	overflow:hidden;
-	font-family:
+	font-family:MyriadPro-Regular;
 }
 
 .jobName {
 	position: absolute;
 	top:50;
 	left:200; 
-	color:green;
+	color:#1CD785;
 	font-size: 20;
 }
 
