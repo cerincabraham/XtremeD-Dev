@@ -15,13 +15,140 @@
 
         <script src="js/moment.min.js"></script>
 		
-		<script src="js/printflow.js"></script>
+	<script src="js/printflow.js"></script>
+	
+	<script src="js/js.cookie.js"></script>
+
+	<script src="js/progressbar.min.js"></script>
 		
-		<script src="js/js.cookie.js"></script>
-		
-		<link href="css/printflow.css" rel="stylesheet">
+	<link href="css/printflow.css" rel="stylesheet">
+	<style>
+
+        </style>
+
+	<script>
+    var circle = "";
+    var printText ="Press Start";
+    var status = "";
+    
+    function refreshData(){
+    	$.getJSON('../services/printJobs/getByPrinterName/'+printerName)
+		.done(function(data){
+			if(data == null){
+				console.log("we are currently not printing anymore");
+				circle.animate(0.0);
+				$('.playWhite').hide();
+				$('.pauseWhite').hide();
+				$('.stopWhite').hide();
+				$('.playGrey').show();
+				$('.pauseGrey').show();
+				$('.stopGrey').show();
+				printText = "Start a print";
+				document.getElementById("printText").innerHTML=printText;
+			} else {
+				status = data.status;
+				console.log(status);
+				starttime=parseInt(data.startTime);
+				currentslice=parseInt(data.currentSlice);
+				totalslices=parseInt(data.totalSlices);
+	        	jobId = (data.id);
+	       		runningjobName = (data.jobName);
+				percentageComplete = currentslice/totalslices
+				circle.animate(percentageComplete);
+				document.getElementById("jobName").innerHTML=runningjobName;
+				Cookies.set('laststartedjob',jobId);
+				if(status == "Printing"){
+					$('.playWhite').hide();
+					$('.pauseWhite').show();
+					$('.stopWhite').show();
+					$('.playGrey').show();
+					$('.pauseGrey').hide();
+					$('.stopGrey').hide();
+					printText = "Printing File";
+					document.getElementById("printText").innerHTML=printText;
+				}
+				if(status == "Paused"){
+					$('.playWhite').show();
+					$('.pauseWhite').hide();
+					$('.stopWhite').show();
+					$('.playGrey').hide();
+					$('.pauseGrey').show();
+					$('.stopGrey').hide();
+					printText = "Print Paused";
+					document.getElementById("printText").innerHTML=printText;
+				}
+				
+			}
+		})
+		.fail(function(){
+			jobId="FAKEe43a-f84f-446c-ade8-70182988d92c";
+			jobname="Dummy Test";
+			totalslices=720;
+			averageslicetime=1000;
+			endtime=starttime+(totalslices*averageslicetime);
+		});
+    }
+    
+	function init() {
+		//init progress bar 
+		circle = new ProgressBar.Circle('#progress-circel', {
+	        color: '#ff4e00',
+			strokeWidth: 2,
+	        duration: 3000,
+	   		easing: 'easeInOut'
+		})
+		startpage();
+
+		endtime=0;
+			temp="";
+			initialsliceurl="";
+			sliceHeight = 0; // set this as 0 to be safe!
+			maxHeight = 0; // set this as 0 too to be safe!
+			document.getElementById("printText").innerHTML=printText;
+				
+			// just grabbing the first printer available, since it's embedded this should be fine :)! Only downside printer would need to be started!
+			$.getJSON('/services/printers/getFirstAvailablePrinter').success(function(data) {
+	   	       	configurationObject = data["configuration"];
+	   	   		printerName = configurationObject["name"];
+	   			refreshData();
+	   			   		
+	   	
+			setInterval(function() {
+				refreshData();
+				startpage();
+				
+				// checking if printer is printing
+				
+				// safeguard for job completion
+					if (typeof Cookies.get('laststartedjob') !== 'undefined'){
+						$.getJSON('/services/printJobs/get/'+Cookies.get('laststartedjob'))
+							.done(function(data){
+								if (data.status == "Completed") {
+									window.location.href=("error.html?type=success&errorname=Print Complete!&errordetails=The print of <b>"+data.jobName+"</b> [Job ID: "+data.id+"] has completed, taking "+moment.duration(data.elapsedTime).humanize()+" altogether.&errordetails2=Please remove the print from the platform and store any uncured resin for your next print.");
+								}
+							});
+					}
+					
+			}, 2500);
+			})
+					
+	};
+
+	function pause(){
+		$.getJSON("../services/printJobs/togglePause/"+jobId);
+			}
+			
+	function cancel(){
+		$.getJSON("../services/printJobs/stopJob/"+jobId);
+			}
+
+	</script>
+
+
+
+
     </head>
-    <body style="background-color: black;" onload="startpage();">
+    <body style="background-color: black;" onload="init();" >
         <div class="screen">
             <div class="main">
 				<div class="title">Home</div>
@@ -42,7 +169,19 @@
 				</a>
 				
 				<img name="wifi" id="wifi" class="wifi" src="images/pixel.png">
+
+				<div class="progress-circel" id="progress-circel"></div>
 				
+				<img class="progressBarBackground" src="images/progressBarBackground.png">
+				<img name="playWhite" class="play playWhite" src="images/playWhite.png" onclick="pause()">
+				<img name="playGrey" class="play playGrey" src="images/playGrey.png">
+				<img name="pauseWhite" class="pause pauseWhite" src="images/pauseWhite.png" onclick="pause()">
+				<img name="pauseGrey" class="pause pauseGrey" src="images/pauseGrey.png">
+				<img name="stopWhite" class="stop stopWhite" src="images/stopWhite.png" onclick="cancel()">
+				<img name="stopGrey" class="stop stopGrey" src="images/stopGrey.png">
+				
+				<div class="printText" id="printText"> </div>
+				<div class="jobName" id="jobName"> </div>
             </div>
         </div>
 

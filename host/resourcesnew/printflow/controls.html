@@ -24,6 +24,7 @@
 	   	        configurationObject = data["configuration"];
 	   	    	printerName = configurationObject["name"];
 		     })
+		     startpage();
 		}
 		
 		function changez(height) {
@@ -34,6 +35,10 @@
 		function homez() {
 			$.getJSON('../services/printers/homeZ/'+printerName);
 			console.log("I'm gonna home")
+		}
+		
+		function showGrid(pixels){
+			$.getJSON('../services/printers/showGridScreen/'+ printerName +"/" + pixels);
 		}
 		</script>
 		
@@ -69,10 +74,9 @@
 				<img name="15Up" class="fiveteenUp" src="images/15Up.png" onclick="changez(15)">
 				
 				<img name="home" class="home" src="images/home.png" onclick="homez()">
-				<img name="enable" class="enable" src="images/Enable.png" onclick="changez(15)">
-				<img name="disable" class="disable" src="images/Disable.png" onclick="changez(15)">
+				<img name="enable" class="enable" src="images/testDisplay.png" onclick="changez(15)">
 				<img name="homing" class="homing" src="images/homing.png" onclick="homez()">
-				<img name="motor" class="motor" src="images/motor.png" onclick="changez(15)">
+				<img name="motor" class="motor" src="images/testDisplayLogo.png" onclick="showGrid(15)">
 				
             </div>
         </div>

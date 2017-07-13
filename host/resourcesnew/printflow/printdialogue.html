@@ -189,21 +189,26 @@
 			maxHeight = 0; // set this as 0 too to be safe!
 						
 			function init(){
-				$.getJSON('../services/printJobs/getByPrinterName/'+printerName)
-				.done(function(data){
-					temp=data;
-					starttime=parseInt(data.startTime);
-					currentslice=parseInt(data.currentSlice);
-					totalslices=parseInt(data.totalSlices);
-                    jobId = (data.id);
-                    runningjobName = (data.jobName);
-                    totalslices = parseInt(data.totalSlices);
-					currentslice = parseInt(data.currentSlice);
-					sliceHeight = parseFloat(data.printer.configuration.slicingProfile.InkConfig[data.printer.configuration.slicingProfile.selectedInkConfigIndex].SliceHeight);
-					maxHeight = parseFloat(data.printer.configuration.machineConfig.PlatformZSize);
-					firstlayertime=parseInt(data.printer.configuration.slicingProfile.InkConfig[data.printer.configuration.slicingProfile.selectedInkConfigIndex].FirstLayerTime);
-					bottomlayers=parseInt(data.printer.configuration.slicingProfile.InkConfig[data.printer.configuration.slicingProfile.selectedInkConfigIndex].NumberofBottomLayers);
-					layertime=parseInt(data.printer.configuration.slicingProfile.InkConfig[data.printer.configuration.slicingProfile.selectedInkConfigIndex].LayerTime);
+								
+				setInterval(function() {
+					
+					// get new data 
+					$.getJSON('../services/printJobs/getByPrinterName/'+printerName)
+						.done(function(data){
+						temp=data;
+						console.log("yess");
+						starttime=parseInt(data.startTime);
+						currentslice=parseInt(data.currentSlice);
+						totalslices=parseInt(data.totalSlices);
+                    	jobId = (data.id);
+                    	runningjobName = (data.jobName);
+                    	totalslices = parseInt(data.totalSlices);
+						currentslice = parseInt(data.currentSlice);
+						sliceHeight = parseFloat(data.printer.configuration.slicingProfile.InkConfig[data.printer.configuration.slicingProfile.selectedInkConfigIndex].SliceHeight);
+						maxHeight = parseFloat(data.printer.configuration.machineConfig.PlatformZSize);
+						firstlayertime=parseInt(data.printer.configuration.slicingProfile.InkConfig[data.printer.configuration.slicingProfile.selectedInkConfigIndex].FirstLayerTime);
+						bottomlayers=parseInt(data.printer.configuration.slicingProfile.InkConfig[data.printer.configuration.slicingProfile.selectedInkConfigIndex].NumberofBottomLayers);
+						layertime=parseInt(data.printer.configuration.slicingProfile.InkConfig[data.printer.configuration.slicingProfile.selectedInkConfigIndex].LayerTime);
 					//make the end time the biggest value of the two ways we try to calculate the data when we start the page. If it falls, that's ok, but it's preferable for the print time to fall.
 					if((starttime+data.elapsedTime+(parseInt(data.averageSliceTime)*(parseInt(data.totalSlices)-parseInt(data.currentSlice))))>starttime+(firstlayertime*bottomlayers)+(layertime*(totalslices-bottomlayers))){
 						endtime=starttime+data.elapsedTime+(parseInt(data.averageSliceTime)*(parseInt(data.totalSlices)-parseInt(data.currentSlice)));
@@ -232,10 +237,9 @@
 				document.getElementById("filename").innerHTML=runningjobName;
 				document.getElementById("jobid").innerHTML=jobId;
 				
-				setInterval(function() {
 					endtime=starttime+elapsedtime+(averageslicetime*(totalslices-currentslice));
 					document.getElementById("vartimeelapsed").innerHTML = moment.duration(moment().valueOf()-starttime).humanize();
-					
+					console.log("kaas");
 					// safeguard for job completion
 					if (typeof Cookies.get('laststartedjob') !== 'undefined'){
 						$.getJSON('/services/printJobs/get/'+Cookies.get('laststartedjob'))
