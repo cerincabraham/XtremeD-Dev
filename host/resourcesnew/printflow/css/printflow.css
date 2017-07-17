@@ -6,6 +6,7 @@
 html, body {
 	overflow:hidden;
 	font-family:MyriadPro-Regular;
+	cursor: none;
 }
 
 .timeText {
@@ -15,6 +16,22 @@ html, body {
 	left:275; 
 	z-index: 10;
 	font-size : 12px;
+}
+
+a {
+	-webkit-user-drag: none;
+  	-khtml-user-drag: none;
+  	-moz-user-drag: none;
+  	-o-user-drag: none;
+  	user-drag: none;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 }
 
 .layersText {
