@@ -30,6 +30,30 @@
     var circle = "";
     var printText ="Press Start";
     var status = "";
+    var averageSlicingTime = "";
+    var currentSlice = ""
+    var totalSlices = "";
+    var elapsedTimeFormatted = "";
+    var timeToComplete = "";
+    var timeToCompleteFormatted = "";
+	var ranOnce = false;
+    
+    function secondsToNiceFormat(totalSeconds) {
+    	hours = Math.floor(totalSeconds / 3600);
+    	totalSeconds %= 3600;
+    	minutes = Math.floor(totalSeconds / 60);
+    	seconds = Math.floor(totalSeconds % 60);
+    	if(hours < 10){
+    		hours = "0" + hours;
+    	}
+    	if(minutes < 10){
+    		minutes = "0" + minutes;
+    	}
+    	if(seconds < 10){
+    		seconds = "0" + seconds;
+    	}
+    	return hours + ":" + minutes + ":" + seconds ;
+    }
     
     function refreshData(){
     	$.getJSON('../services/printJobs/getByPrinterName/'+printerName)
@@ -46,8 +70,12 @@
 				printText = "Start a print";
 				document.getElementById("printText").innerHTML=printText;
 			} else {
+				averageSlicingTime = data.averageSliceTime;
+				currentSlice = data.currentSlice;
+				totalSlices = data.totalSlices;
+				timeToComplete = (averageSlicingTime * totalSlices)/1000;
+				timeToCompleteFormatted = secondsToNiceFormat(timeToComplete);
 				status = data.status;
-				console.log(status);
 				starttime=parseInt(data.startTime);
 				currentslice=parseInt(data.currentSlice);
 				totalslices=parseInt(data.totalSlices);
@@ -56,6 +84,13 @@
 				percentageComplete = currentslice/totalslices
 				circle.animate(percentageComplete);
 				document.getElementById("jobName").innerHTML=runningjobName;
+				if(ranOnce == false){
+					elapsedTime = data.elapsedTime / 1000;
+					elapsedTimeFormatted = secondsToNiceFormat(elapsedTime);
+					document.getElementById("timePrintJob").innerHTML=elapsedTimeFormatted + "/" + timeToCompleteFormatted;
+					ranOnce = true;
+				}
+				document.getElementById("layers").innerHTML=currentSlice + "/" + totalSlices;
 				Cookies.set('laststartedjob',jobId);
 				if(status == "Printing"){
 					$('.playWhite').hide();
@@ -98,7 +133,6 @@
 	   		easing: 'easeInOut'
 		})
 		startpage();
-
 		endtime=0;
 			temp="";
 			initialsliceurl="";
@@ -142,7 +176,24 @@
 	function cancel(){
 		$.getJSON("../services/printJobs/stopJob/"+jobId);
 			}
+	
+	var myInterval = setInterval(function () {
+			if(status=="Printing"){
+				elapsedTime++;
+				elapsedTimeFormatted = secondsToNiceFormat(elapsedTime);
+				console.log(elapsedTime);
+				document.getElementById("timePrintJob").innerHTML=elapsedTimeFormatted + "/" + timeToCompleteFormatted;
+				console.log(status);
+			}	
+		}, 1000);
 
+	$(function() {
+		 $('.menulink').click(function(e){
+		     e.preventDefault();
+		   $("#bg").attr('src',"img/picture1.jpg");
+		 });
+		});
+	
 	</script>
 
 
@@ -183,6 +234,15 @@
 				
 				<div class="printText" id="printText"> </div>
 				<div class="jobName" id="jobName"> </div>
+				
+				<div class="timePrintJob" id="timePrintJob"> </div>
+				<div class="layers" id="layers"> </div>
+				
+				<img name="infoTime" class="infoTime" src="images/infoTime.png">
+				<img name="infoLayers" class="infoLayers" src="images/infoLayers.png">
+				
+				<div class="timeText">Time </div>
+				<div class="layersText">Layers </div>
             </div>
         </div>
 

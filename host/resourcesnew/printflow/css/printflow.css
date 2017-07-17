@@ -8,6 +8,63 @@ html, body {
 	font-family:MyriadPro-Regular;
 }
 
+.timeText {
+	position: absolute;
+	color:white;
+	top:360;
+	left:275; 
+	z-index: 10;
+	font-size : 12px;
+}
+
+.layersText {
+	position: absolute;
+	color:white;
+	top:360;
+	left:608; 
+	z-index: 10;
+	font-size : 12px;
+}
+
+.infoLayers {
+	position: absolute;
+	color:white;
+	top:340;
+	left:597; 
+	z-index: 10;
+}
+
+.infoTime {
+	position: absolute;
+	color:white;
+	top:343;
+	left:245; 
+	z-index: 10;
+}
+
+.Layers {
+	position: absolute;
+	color:white;
+	top:340;
+	left:600; 
+	z-index: 10;
+}
+
+.timePrintJob {
+	position: absolute;
+	color:white;
+	top:340;
+	left:275; 
+	z-index: 10;
+}
+
+.closeButton {
+	position: absolute;
+	top:285;
+	left:350; 
+	z-index: 10;
+}
+
 .jobName {
 	position: absolute;
 	top:50;
