@@ -10,12 +10,12 @@ if [ -z "$HOME" ] || [ "$HOME" == "/" ]; then
   HOME=~root
 fi
 
-DEFAULT_REPO="Cerin-Photonic3D/Photonic3D-Dev"
-DEV_REPO="Cerin-Photonic3D/Photonic3D-Dev"
-TESTKIT_REPO="Cerin-Photonic3D/Photonic3D-Dev"
-TESTKITDEV_REPO="Cerin-Photonic3D/Photonic3D-Dev"
+DEFAULT_REPO="cerincabraham/XtremeD-Dev"
+DEV_REPO="cerincabraham/XtremeD-Dev"
+TESTKIT_REPO="cerincabraham/XtremeD-Dev"
+TESTKITDEV_REPO="cerincabraham/XtremeD-Dev"
 
 CONFIG_PROPS="${HOME}/3dPrinters/config.properties"
 
 PHOTOCENTRIC_PORTNO=9091
-PHOTOCENTRIC_PASSWD=photocentric
+PHOTOCENTRIC_PASSWD=xtreme4630
