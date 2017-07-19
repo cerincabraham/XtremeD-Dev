@@ -81,7 +81,7 @@ else
 	if [[ $1 =~ .*Creation-Workshop-Host.* ]] || [[ $1 =~ .*Photonic3D.* ]]; then
 		repo=$1
 	else
-		repo="$1/Photonic3D-Dev"
+		repo="$1/XtremeD-Dev"
 	fi;
 fi;
 
