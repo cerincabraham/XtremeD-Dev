@@ -278,8 +278,8 @@ echo "["$(timestamp)"] configuring printflow interface"
 source /etc/photocentric/printerconfig.ini
 touch photocentric/printflow/js/printerconfig.js
 touch resourcesnew/printflow/js/printerconfig.js
-echo var printerName = \"$printername\"\; > photocentric/printflow/js/printerconfig.js
-echo var repo = \"$repo\"\; >> photocentric/printflow/js/printerconfig.js
+echo var printerName = \"$printername\"\; > XtremeD-Dev/printflow/js/printerconfig.js
+echo var repo = \"$repo\"\; >> XtremeD-Dev/printflow/js/printerconfig.js
 echo var printerName = \"$printername\"\; > resourcesnew/printflow/js/printerconfig.js
 echo var repo = \"$repo\"\; >> resourcesnew/printflow/js/printerconfig.js
 
