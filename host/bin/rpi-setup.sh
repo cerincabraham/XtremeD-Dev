@@ -1,14 +1,13 @@
 #!/bin/bash
 
-# can be either 4ktouch, 4kscreen, "Photocentric 10" or "LC HR"
 export portno=9091
 # currently set to 9091. Needs to be updated if the port config changes.
 # Installers will also need to double check and update this if the port no changes between builds.
-export newpassword=photocentric
+export newpassword=xtreme4630
 # *** IMPORTANT NOTE *** declaring this as a variable in an open source project is totally insecure!
 # Ideally the password should be changed offline, and this repo should never be updated to match that.
 # but it's still better than sending out the hardware with the default pi user and password unchanged. Obviously.
-export repo="Cerin-Photonic3D/Photonic3D-Dev"
+export repo="cerincabraham/XtremeD-Dev"
 
 #require SU
 if [[ $UID != 0 ]]; then
