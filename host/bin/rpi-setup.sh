@@ -178,7 +178,7 @@ echo \# Photocentric mods >> /boot/config.txt
 
 
 
-		newhost="3dPrinter"
+		newhost="xtreme-d"
 
 # Change hostname
 # left this 'til last for good reasons. Keep it last now.
