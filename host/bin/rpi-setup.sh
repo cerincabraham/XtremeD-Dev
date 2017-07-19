@@ -176,7 +176,17 @@ echo \# Photocentric mods >> /boot/config.txt
 			
 
 
-
+		if grep -Fxq "hdmi_pixel_freq_limit" /boot/config.txt
+ 			then
+ 				echo "already done!"
+ 			else
+ 				echo hdmi_group=2 >> /boot/config.txt
+ 				echo hdmi_mode=87 >> /boot/config.txt
+ 				echo hdmi_cvt 1920 1200 30 >> /boot/config.txt
+ 				echo max_framebuffer_width=1920 >> /boot/config.txt
+ 				echo max_framebuffer_height=1200 >> /boot/config.txt
+ 				echo hdmi_pixel_freq_limit=400000000 >> /boot/config.txt
+ 		fi
 
 		newhost="xtreme-d"
 
