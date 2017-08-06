@@ -371,8 +371,8 @@ img {
 }
 .printerstatus{
 	position: absolute; 
-	top: 20px; 
-	left: 704px;
+	top: 60px; 
+	left: 9px;
 	width: 25px;
 	height: 35px;
 	user-drag: none; 

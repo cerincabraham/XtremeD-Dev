@@ -133,6 +133,7 @@
 	   		easing: 'easeInOut'
 		})
 		startpage();
+		printerStatus();
 		endtime=0;
 			temp="";
 			initialsliceurl="";
@@ -193,7 +194,7 @@
 		   $("#bg").attr('src',"img/picture1.jpg");
 		 });
 		});
-	
+
 	</script>
 
 
@@ -219,9 +220,12 @@
 				<a href="controls.html">
 					<img class="controlsButton" src="images/controls_blue.png">
 				</a>
-				
+				<a href="resin.html">
+					 <button class="button"  ><span class="icon">Resin</span></button>
+				</a>
 				<img name="wifi" id="wifi" class="wifi" src="images/pixel.png">
-
+				<img name="printerstatus" id="printerstatus" class="printerstatus" src="images/pixel.png">
+				
 				<div class="progress-circel" id="progress-circel"></div>
 				
 				<img class="progressBarBackground" src="images/progressBarBackground.png">
