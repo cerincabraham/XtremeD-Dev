@@ -1,5 +1,5 @@
 <html>
-    <head>
+    <head> 
         <title>Main Menu</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -133,7 +133,6 @@
 	   		easing: 'easeInOut'
 		})
 		startpage();
-		printerStatus();
 		endtime=0;
 			temp="";
 			initialsliceurl="";
@@ -194,7 +193,7 @@
 		   $("#bg").attr('src',"img/picture1.jpg");
 		 });
 		});
-
+	
 	</script>
 
 
@@ -204,7 +203,7 @@
     <body style="background-color: black;" onload="init();" >
         <div class="screen">
             <div class="main">
-				<div class="title">Home...</div>
+				<div class="title">Dashboard</div>
 				<a href="wifisettings.html">
 					<img class="wifiButton" src="images/wifi_white.png">
 				</a>
@@ -220,12 +219,9 @@
 				<a href="controls.html">
 					<img class="controlsButton" src="images/controls_blue.png">
 				</a>
-				<a href="resin.html">
-					 <button class="button"  ><span class="icon">Resin</span></button>
-				</a>
-				<img name="wifi" id="wifi" class="wifi" src="images/pixel.png">
-				<img name="printerstatus" id="printerstatus" class="printerstatus" src="images/pixel.png">
 				
+				<img name="wifi" id="wifi" class="wifi" src="images/pixel.png">
+
 				<div class="progress-circel" id="progress-circel"></div>
 				
 				<img class="progressBarBackground" src="images/progressBarBackground.png">
